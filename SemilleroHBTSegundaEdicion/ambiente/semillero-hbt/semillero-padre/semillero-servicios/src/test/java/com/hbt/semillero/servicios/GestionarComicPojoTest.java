@@ -8,6 +8,9 @@ import com.hbt.semillero.pojo.*;
 
 public class GestionarComicPojoTest {
 	
+	/*
+	 * Metodo que se utiliza para probar que se pueda eliminar un comic mediante un indice
+	 */
 	@Test
 	public void eliminar() {
 		GestionarComicPOJO gestionarComicPOJO = new GestionarComicPOJO();
@@ -26,7 +29,10 @@ public class GestionarComicPojoTest {
 		gestionarComicPOJO.eliminarComicDTO("1");
 		Assert.assertEquals(gestionarComicPOJO.getListaComics().size(), tamañoAnterior - 1);
 	}
-
+	
+	/*
+	 * Metodo que se utiliza para probar que se pueda modificar (su nombre) un comic mediante un indice
+	 */
 	@Test
 	public void modificar() {
 		GestionarComicPOJO gestionarComicPOJO = new GestionarComicPOJO();

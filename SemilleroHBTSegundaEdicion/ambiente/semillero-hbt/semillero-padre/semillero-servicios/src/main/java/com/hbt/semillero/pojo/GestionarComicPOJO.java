@@ -18,7 +18,10 @@ import com.hbt.semillero.dto.ComicDTO;
  */
 public class GestionarComicPOJO {
 	private List<ComicDTO> listaComics = null;
-
+	
+	/*
+	 *En este metodo creamos un comic y retornamos ese mismo comic
+	 */
 	public ComicDTO crearComicDTO(String id, String nombre, String editorial, String tematica, String coleccion,
 			Integer numeroPaginas, BigDecimal precio, String autores, Boolean color, LocalDate fechaVenta,
 			String estado, Long cantidad) {
@@ -29,6 +32,9 @@ public class GestionarComicPOJO {
 
 	}
 
+	/*
+	 *En este metodo agregamos un comic a la lista de comics, si la lista no tiene valores primero la creamos y luego le agregamos el comic entrante
+	 */
 	public void agregarComicDTOLista(ComicDTO comicDTO) {
 		if (listaComics == null) {
 			listaComics = new ArrayList<ComicDTO>();
@@ -36,6 +42,9 @@ public class GestionarComicPOJO {
 		listaComics.add(comicDTO);
 	}
 
+	/*
+	 *En este metodo creamos un comic y lo agregamos a la lista de comics, si la lista esta vacia, la creamos primero y luego agregamos el comic que se acabo de crear
+	 */
 	public void crearComicDTO() {
 		ComicDTO comicDTO = new ComicDTO();
 		comicDTO.setId("100");
@@ -55,7 +64,10 @@ public class GestionarComicPOJO {
 		}
 		listaComics.add(comicDTO);
 	}
-
+	
+	/*
+	 *En este metodo le cambiamos el nombre a un comic en una posicion especifica de la lista de comics
+	 */
 	public void modificarComicDTO(String id, String nombre) {
 		ComicDTO comicModificar = null;
 		for (int i = 0; i < listaComics.size(); i++) {
