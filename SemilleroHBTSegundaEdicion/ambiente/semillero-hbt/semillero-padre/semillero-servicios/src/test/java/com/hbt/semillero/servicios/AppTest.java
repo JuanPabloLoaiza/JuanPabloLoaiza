@@ -1,38 +1,188 @@
 package com.hbt.semillero.servicios;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Arrays;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
+import com.hbt.semillero.dto.ComicDTO;
+import com.hbt.semillero.entidades.EstadoEnum;
+import com.hbt.semillero.entidades.TematicaEnum;
+import com.hbt.semillero.pojo.GestionarComicPOJO;
 
-/**
- * Test unitario del semillero HBT
- * 
- * @author ccastano
- *
- */
 public class AppTest {
 
-	/**
-	 * Metodo que permite validar si dada la suma de dos numero el resultado es el
-	 * correcto
-	 */
-	@Test
-	public void primeraPU() {
-		Long resultadoEsperado = 2159L;
-		Long sumando1 = 1500L;
-		Long sumando2 = 659L;
-		Long resultado = sumando1 + sumando2;
-		Assert.assertEquals(resultado, resultadoEsperado);
+	public void shouldAnswerWithTrue() {
+
 	}
 
-	/**
-	 * 
-	 * Metodo encargado de dada una cadena invertir su posicion y retornarla al
-	 * revez
-	 * 
-	 * @param cadena
-	 * @return
-	 */
+	@Test(enabled = false)
+	public void primeraPU() {
+		Long resultadoEsperado = 150L;
+		Long sumando1 = 100L;
+		Long sumando2 = 50L;
+
+		Long resultado = sumando1 + sumando2;
+
+		Assert.assertEquals(resultado, resultadoEsperado);
+
+		resultadoEsperado = 200L;
+		Assert.assertNotEquals(resultado, resultadoEsperado);
+	}
+
+	@Test(enabled = false)
+	public void segundaPU() {
+
+		// Example 1: Succesful case
+		String example = "abcde";
+
+		String actual = invertirCadena(example);
+
+		String expected = "edcba";
+
+		Assert.assertEquals(actual, expected);
+
+		// Example 2: Succesful case (empty string)
+		example = "";
+
+		actual = invertirCadena(example);
+
+		expected = "";
+
+		Assert.assertEquals(actual, expected);
+
+		// Example 3: Unsucessful case (Strings are not equal)
+		example = "abcde";
+
+		actual = invertirCadena(example);
+
+		expected = "edcby";
+
+		Assert.assertNotEquals(actual, expected);
+
+		// Example 4: Unsucessful case (Empty string)
+		example = "";
+
+		actual = invertirCadena(example);
+
+		expected = "edcba";
+
+		Assert.assertNotEquals(actual, expected);
+
+		// Example 4: Unsucessful case (Unequal data types)
+
+		example = "123";
+
+		actual = invertirCadena(example);
+
+		int exp = 321;
+
+		Assert.assertNotEquals(321, actual);
+	}
+
+	@Test(enabled = false)
+	public void terceraPU() {
+
+		// Instanciar un enum de la clase EstadoEnum
+		EstadoEnum estado = EstadoEnum.ACTIVO;
+
+		// Devolver un String con el nombre de la constante Activo
+		String estadoAsString = estado.name();
+
+		// Devolver un entero con la posición del enum según está declarada
+		int posEstado = estado.ordinal();
+
+		// Comparar el enum con el parámetro según está declarado el enum
+
+		int expectedPos = 0;
+
+		// Assert para la posición de ACTIVO
+		Assert.assertEquals(posEstado, expectedPos);
+
+		// Assert para la posición de INACTIVO
+		estado = EstadoEnum.INACTIVO;
+		posEstado = estado.ordinal();
+		expectedPos = 1;
+
+		Assert.assertEquals(posEstado, expectedPos);
+
+		// Devolver un array que contiene todos los enum
+		EstadoEnum[] estados = EstadoEnum.values();
+
+		Arrays.asList(estados).forEach(System.out::println);
+
+	}
+
+	@Test(enabled = false)
+	public void crearComicDTOTest() {
+		GestionarComicPOJO gestionarComicPOJO = new GestionarComicPOJO();
+		gestionarComicPOJO.crearComicDTO();
+		Assert.assertNotNull(gestionarComicPOJO.getListaComics());
+		Assert.assertTrue(gestionarComicPOJO.getListaComics().size() != 0);
+		Assert.assertTrue(!gestionarComicPOJO.getListaComics().isEmpty());
+	}
+
+	@Test
+	public void creartComicDTOTest() {
+		GestionarComicPOJO gestionarComicPOJO = new GestionarComicPOJO();
+
+		ComicDTO comicDTO = gestionarComicPOJO.crearComicDTO("101", "Captain America Corps 1-5 USA", "Panini Comics",
+				TematicaEnum.FANTASTICO.name(), "BIBLIOTECA MARVEL", 128, new BigDecimal(5000),
+				"Phillippe Briones, Roger Stern", Boolean.FALSE, LocalDate.now(), "ACTIVO", 5L);
+
+		gestionarComicPOJO.agregarComicDTOLista(comicDTO);
+
+		Assert.assertNotNull(gestionarComicPOJO.getListaComics());
+		Assert.assertTrue(!gestionarComicPOJO.getListaComics().isEmpty());
+		Assert.assertTrue(gestionarComicPOJO.getListaComics().size() == 1);
+
+		comicDTO = new ComicDTO();
+
+		comicDTO.setId("100");
+		comicDTO.setNombre("Dragon ball Yamcha");
+		comicDTO.setEditorial("Planeta Cómic");
+		comicDTO.setTematica(TematicaEnum.AVENTURAS.name());
+		comicDTO.setColeccion("Manga Shonen");
+		comicDTO.setNumeroPaginas(100);
+		comicDTO.setPrecio(new BigDecimal(2100));
+		comicDTO.setAutores("Dragon Garow Lee");
+		comicDTO.setColor(Boolean.TRUE);
+		comicDTO.setFechaVenta(LocalDate.now());
+		comicDTO.setEstado("ACTIVO");
+		comicDTO.setCantidad(20L);
+
+		gestionarComicPOJO.agregarComicDTOLista(comicDTO);
+
+		Assert.assertTrue(gestionarComicPOJO.getListaComics().size() > 1);
+
+		comicDTO = new ComicDTO();
+
+		comicDTO.setId("100");
+		comicDTO.setNombre("Dragon ball Yamcha");
+		comicDTO.setEditorial("Planeta Cómic");
+		comicDTO.setTematica(TematicaEnum.AVENTURAS.name());
+		comicDTO.setColeccion("Manga Shonen");
+		comicDTO.setNumeroPaginas(100);
+		comicDTO.setPrecio(new BigDecimal(2100));
+		comicDTO.setAutores("Dragon Garow Lee");
+		comicDTO.setColor(Boolean.TRUE);
+		comicDTO.setFechaVenta(LocalDate.now());
+		comicDTO.setEstado("ACTIVO");
+		comicDTO.setCantidad(20L);
+
+		gestionarComicPOJO.agregarComicDTOLista(comicDTO);
+
+		Assert.assertTrue(gestionarComicPOJO.getListaComics().size() == 3);
+	}
+
+	@Test
+	public void agregarComicDTOLista() {
+
+	}
+
 	private String invertirCadena(String cadena) {
 		String cadenaInvertida = "";
 		for (int x = cadena.length() - 1; x >= 0; x--) {
@@ -40,22 +190,9 @@ public class AppTest {
 		}
 		return cadenaInvertida;
 	}
-	
+
+	// TODO
 	/**
-	 * 
-	 * Metodo encargado de validar que se invierte la cadena correctamente
-	 * Se pone en mayusculas las cadenas
-	 * Se quitan espacio al inicio y al fin de la cadena
-	 * Se reemplazan espacios para que la validacion se pueda comprobar 
-	 * <b>Caso de Uso</b>
-	 *
+	 * Pediente hacer un método que use el método ToString de la entidad COMIC
 	 */
-	@Test
-	public void invertirCadenaTest() {
-		String resultado = invertirCadena("Yo soy");
-		String actual =resultado.toUpperCase().trim();
-		String esperado = "Yo soy".toUpperCase().trim();
-		Assert.assertEquals(actual.replace(" ",""), esperado.replace(" ",""));
-	}
-	
 }
